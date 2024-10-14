@@ -1,0 +1,16 @@
+{
+    "name": "sunnDUISystem",
+    "rootNamespace": "",
+    "references": [
+        "GUID:bdc5f5e2ad7b8834991795131549d1ba"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
