@@ -165,10 +165,10 @@ TextureImporter:
       name: level_7_0
       rect:
         serializedVersion: 2
-        x: 2
+        x: 5
         y: 0
-        width: 65
-        height: 95
+        width: 62
+        height: 114
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -186,10 +186,10 @@ TextureImporter:
       name: level_7_1
       rect:
         serializedVersion: 2
-        x: 72
+        x: 75
         y: 0
-        width: 65
-        height: 91
+        width: 62
+        height: 114
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -231,7 +231,7 @@ TextureImporter:
         x: 215
         y: 0
         width: 62
-        height: 111
+        height: 114
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
