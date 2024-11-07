@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using static UnityEngine.Quaternion;
 
 public class CircleController : MonoBehaviour {
+    public RectTransform pointHolder;
+    public RectTransform areaHolder;
     public Image pointImage; // The rotating red point image
     public Image areaImage; // The stationary green area image
     public Button actionButton; // The UI button for performing the action
@@ -15,9 +17,8 @@ public class CircleController : MonoBehaviour {
 
     void Start() {
         // Set the sizes of the green area and the red point
-        areaImage.fillAmount = areaSize;
         pointImage.fillAmount = pointSize;
-
+        pointHolder.localRotation = Euler(0, 0, 360 * pointSize / 2);
         SetAreaLocation();
 
         // Assign the button click event
@@ -25,6 +26,11 @@ public class CircleController : MonoBehaviour {
     }
 
     void SetAreaLocation() {
+        var areaRand = Random.Range(0.05f, 0.15f);
+        areaSize = areaRand;
+        areaImage.fillAmount = areaSize;
+        areaHolder.localRotation = Euler(0, 0, 360 * areaSize / 2);
+
         // Set the green area to a fixed position (example: 90 degrees on the circle)
         var random = Random.Range(-180f, 180f);
         areaImage.rectTransform.localRotation = Euler(0, 0, random); // Adjust as needed
@@ -46,25 +52,18 @@ public class CircleController : MonoBehaviour {
 
     void CheckPointInArea() {
         // Calculate the angle of the green area (fixed) and the rotating red point
-        int pointAngle = (int)pointImage.rectTransform.localRotation.eulerAngles.z;
-        int areaAngle = (int)areaImage.rectTransform.localRotation.eulerAngles.z;
-        if (areaAngle % 2 != 0) areaAngle++;
+        float pointAngle = pointImage.rectTransform.localRotation.eulerAngles.z;
+        float areaAngle = areaImage.rectTransform.localRotation.eulerAngles.z;
 
         // Convert area and point sizes from fillAmount (0 to 1) to degrees (0 to 360)
-        int areaSizeDegrees = (int)(areaSize * 360f);
-        int pointSizeDegrees = (int)(pointSize * 360f);
+        float areaSizeDegrees = areaSize * 360f;
+        float pointSizeDegrees = pointSize * 360f;
 
         // Calculate the angle difference between the center of the green area and the red point
-        //float angleDifference = Abs(DeltaAngle(pointAngle, areaAngle));
-
-        // Debug log the variables
-        //Debug.Log($"pointAngle: {pointAngle}, areaAngle: {areaAngle}, areaSizeDegrees: {areaSizeDegrees}, pointSizeDegrees: {pointSizeDegrees}");
-        if(pointAngle - pointSizeDegrees >= areaAngle - areaSizeDegrees && pointAngle <= areaAngle)
-            _isPointInArea = true;
-        else _isPointInArea = false;
+        float angleDifference = Mathf.Abs(Mathf.DeltaAngle(pointAngle, areaAngle));
 
         // Check if the point's angle is within the bounds of the area size and store result
-        //_isPointInArea = angleDifference <= (areaSizeDegrees / 2f + pointSizeDegrees / 2f);
+        _isPointInArea = angleDifference <= (areaSizeDegrees / 2f + pointSizeDegrees / 2f);
     }
 
     void OnActionButtonClick() {
