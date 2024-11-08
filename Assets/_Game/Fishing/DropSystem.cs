@@ -24,8 +24,8 @@ public class DropSystem : MonoBehaviour {
     [Tooltip("List of items and their drop rates")]
     public List<DropItem> items = new List<DropItem>();
 
-    private Dictionary<ItemType, DropItem> itemDictionary;
-    private Dictionary<ItemType, float> activeModifiers = new Dictionary<ItemType, float>(); // Track active modifiers
+    Dictionary<ItemType, DropItem> _itemDictionary;
+    readonly Dictionary<ItemType, float> _activeModifiers = new Dictionary<ItemType, float>(); // Track active modifiers
 
     void Awake() {
         InitializeDropSystem();
@@ -33,30 +33,30 @@ public class DropSystem : MonoBehaviour {
 
     // Initialize item dictionary and set current rates to base rates
     void InitializeDropSystem() {
-        itemDictionary = new Dictionary<ItemType, DropItem>();
+        _itemDictionary = new Dictionary<ItemType, DropItem>();
         foreach (var item in items) {
             item.currentRate = item.baseRate;
-            itemDictionary[item.itemType] = item;
+            _itemDictionary[item.itemType] = item;
         }
     }
 
     // Equip an item that modifies the drop rate of a specific item type
     public void EquipItemModifier(ItemType type, float percentIncrease) {
-        if (itemDictionary.ContainsKey(type)) {
+        if (_itemDictionary.ContainsKey(type)) {
             // Apply the modifier only if not already applied
-            if (!activeModifiers.ContainsKey(type)) {
-                activeModifiers[type] = percentIncrease; // Store the modifier
-                float baseRate = itemDictionary[type].baseRate;
-                itemDictionary[type].currentRate = baseRate * (1 + percentIncrease / 100f); // Apply percentage increase
+            if (!_activeModifiers.ContainsKey(type)) {
+                _activeModifiers[type] = percentIncrease; // Store the modifier
+                float baseRate = _itemDictionary[type].baseRate;
+                _itemDictionary[type].currentRate = baseRate * (1 + percentIncrease / 100f); // Apply percentage increase
             }
         }
     }
 
     // Unequip the item, reverting the drop rate back to the base rate
     public void UnequipItemModifier(ItemType type) {
-        if (activeModifiers.ContainsKey(type)) {
-            activeModifiers.Remove(type); // Remove the modifier
-            itemDictionary[type].currentRate = itemDictionary[type].baseRate; // Reset to base rate
+        if (_activeModifiers.ContainsKey(type)) {
+            _activeModifiers.Remove(type); // Remove the modifier
+            _itemDictionary[type].currentRate = _itemDictionary[type].baseRate; // Reset to base rate
         }
     }
 

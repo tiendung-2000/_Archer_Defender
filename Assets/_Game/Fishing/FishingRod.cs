@@ -34,7 +34,7 @@ public class FishingRod : MonoBehaviour {
         Debug.Log("Fishing rod equipped with custom drop rate increases.");
     }
 
-    // Unequip the fishing rod and reset all drop rates
+    // Unequipped the fishing rod and reset all drop rates
     [Sirenix.OdinInspector.Button]
     public void Unequip() {
         if (_dropSystem == null) return;
